@@ -50,7 +50,7 @@ grunt.initConfig({
 ```
 
 ## Contributing
-Interested in contributing? Submit issues to https://github.com/alisonailea/grunt-ractive-parse/issues or Fork and submit a pull request.
+Interested in contributing? Submit issues to https://github.com/alisonailea/grunt-extjsractive-parse/issues or Fork and submit a pull request.
 
 ## Release History
 v.0.1.0 - initial setup, working version
