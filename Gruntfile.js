@@ -19,7 +19,7 @@ module.exports = function (grunt) {
       this.files.forEach(function(file){
           var templates = file.src.map(parse);
           grunt.file.write(file.dest,
-              'Ext.define("Savanna.components.templates", {\n' + templates.join(',\n') + '\n}');
+              'var templates = {\n' + templates.join(',\n') + '\n}');
       });
   }
 

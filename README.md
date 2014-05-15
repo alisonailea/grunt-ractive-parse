@@ -1,6 +1,9 @@
-# NPM module grunt-extjsractive-parse
+# NPM module grunt-ractive-parse
 
-> pre-parse Ractive templates for use in ExtJS projects
+> pre-parse Ractive templates for use in javascfript projects
+
+## Acknowledgements
+Based on the code from Ractive.org http://docs.ractivejs.org/latest/get-started-with-node-js
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
@@ -52,6 +55,4 @@ Interested in contributing? Submit issues to https://github.com/alisonailea/grun
 ## Release History
 v.0.1.0 - initial setup, working version
 
-v.0.1.1 - specific settings for ExtJS
-
-v.0.1.2 - code cleanup
+v.0.1.1 - code cleanup
