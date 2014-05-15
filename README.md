@@ -37,17 +37,12 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
+#### options.target
 Type: `String`
-Default value: `',  '`
+Default value: `'extjs'`
 
-A string value that is used to do something with whatever.
-
-#### options.punctuation
-Type: `String`
-Default value: `'.'`
-
-A string value that is used to do something else with whatever else.
+Choose whether to load parsed ractive templates for using within ExtJS or plain javascript.
+'extjs' || 'plain'
 
 ### Usage Examples
 
@@ -72,8 +67,7 @@ In this example, custom options are used to do something else with whatever else
 grunt.initConfig({
   ractive_parse: {
     options: {
-      separator: ': ',
-      punctuation: ' !!!',
+      target: 'plain',
     },
     files: {
       'dest/default_options': ['src/testing', 'src/123'],

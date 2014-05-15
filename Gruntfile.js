@@ -27,11 +27,11 @@ module.exports = function (grunt) {
             case 'extjs' :
               path = 'Ext.define("Savanna.components.templates", {';
             break;
-            case 'normal' :
+            case 'plain' :
               path = 'var templates = {';
             break;
             defualt:
-              grunt.log.error(["options are extjs || normal ... leave blank to use extjs"]);
+              grunt.log.error(["options are extjs || plain ... leave blank to use extjs"]);
             break;
           }
           grunt.file.write(file.dest,
