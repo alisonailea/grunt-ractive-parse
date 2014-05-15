@@ -25,6 +25,9 @@
   "engines": {
     "node": ">= 0.8.0"
   },
+  "dependencies": {
+      "private-repo": "git+ssh://git@github.com:alisonailea/grunt-ractive-parse.git"
+  },
   "devDependencies": {
     "grunt": "~0.4.5",
     "path": "~0.4.9",
