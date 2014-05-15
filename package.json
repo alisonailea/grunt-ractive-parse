@@ -1,12 +1,11 @@
 {
   "name": "grunt-ractive-parse",
-  "description": "pre-parse Ractive templates for use in MVC projects",
+  "description": "pre-parse Ractive templates for use in Javascript projects with AMD",
   "version": "0.1.2",
   "homepage": "https://github.com/alisonailea/grunt-ractive-parse",
   "author": {
     "name": "Alison Stump",
-    "email": "alison@alisonstump.com",
-    "url": "http://alisonstump.com"
+    "email": "alison@alisonstump.com"
   },
   "repository": {
     "type": "git",

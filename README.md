@@ -1,6 +1,6 @@
 # NPM module grunt-ractive-parse
 
-> pre-parse Ractive templates for use in javascfript projects
+> pre-parse Ractive templates for use in javascfript projects with AMD
 
 ## Acknowledgements
 Based on the code from Ractive.org http://docs.ractivejs.org/latest/get-started-with-node-js
