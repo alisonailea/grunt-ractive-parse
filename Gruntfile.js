@@ -12,13 +12,30 @@ var Ractive = require('ractive'),
 
 module.exports = function (grunt) {
   var desc = 'pre-parse Ractive templates for use in MVC projects';
+  var target = grunt.option('target') || 'extjs';
+
+
   grunt.registerMultiTask('ractive_parse', desc, make);
 
   function make(){
       this.files.forEach(function(file){
           var templates = file.src.map(parse);
+          var target = grunt.option('target');
+          var path;
+
+          switch(target){
+            case 'extjs' :
+              path = 'Ext.define("Savanna.components.templates", {';
+            break;
+            case 'normal' :
+              path = 'var templates = {';
+            break;
+            defualt:
+              grunt.log.error(["options are extjs || normal ... leave blank to use extjs"]);
+            break;
+          }
           grunt.file.write(file.dest,
-              'Ext.define("Savanna.components.templates", {\n' + templates.join(',\n') + '\n}');
+              path+'\n' + templates.join(',\n') + '\n}');
       });
   }
 

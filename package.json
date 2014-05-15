@@ -37,6 +37,8 @@
     "gruntplugin",
     "grunt",
     "ractive",
-    "ractiveparse"
+    "ractiveparse",
+    "extjs",
+    "extjsractive"
   ]
 }
