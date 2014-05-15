@@ -1,0 +1,41 @@
+{
+  "name": "grunt-ractive-parse",
+  "description": "pre-parse Ractive templates for use in MVC projects",
+  "version": "0.1.0",
+  "homepage": "https://github.com/alisonailea/grunt-ractive-parse",
+  "author": {
+    "name": "Alison Stump",
+    "email": "alison@alisonstump.com",
+    "url": "http://alisonstump.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/alisonailea/grunt-ractive-parse.git"
+  },
+  "bugs": {
+    "url": "https://github.com/alisonailea/grunt-ractive-parse/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/alisonailea/grunt-ractive-parse/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.5",
+    "path": "~0.4.9",
+    "ractive": "~0.4.0"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.5"
+  },
+  "keywords": [
+    "gruntplugin",
+    "grunt",
+    "ractive",
+    "ractiveparse"
+  ]
+}
