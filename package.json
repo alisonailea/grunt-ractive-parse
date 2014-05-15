@@ -8,6 +8,7 @@
     "email": "alison@alisonstump.com",
     "url": "http://alisonstump.com"
   },
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git://github.com/alisonailea/grunt-ractive-parse.git"
