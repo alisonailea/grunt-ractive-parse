@@ -11,13 +11,13 @@ This plugin requires Grunt `~0.4.5`
 If you haven't used [Grunt](http://gruntjs.com/) before, be sure to check out the [Getting Started](http://gruntjs.com/getting-started) guide, as it explains how to create a [Gruntfile](http://gruntjs.com/sample-gruntfile) as well as install and use Grunt plugins. Once you're familiar with that process, you may install this plugin with this command:
 
 ```shell
-npm install grunt-extjsractive-parse --save-dev
+npm install grunt-ractive-parse --save-dev
 ```
 
 Once the plugin has been installed, it may be enabled inside your Gruntfile with this line of JavaScript:
 
 ```js
-grunt.loadNpmTasks('grunt-extjsractive-parse');
+grunt.loadNpmTasks('grunt-ractive-parse');
 ```
 
 ## The "ractive_parse" task
@@ -50,7 +50,7 @@ grunt.initConfig({
 ```
 
 ## Contributing
-Interested in contributing? Submit issues to https://github.com/alisonailea/grunt-extjsractive-parse/issues or Fork and submit a pull request.
+Interested in contributing? Submit issues to https://github.com/alisonailea/grunt-ractive-parse/issues or Fork and submit a pull request.
 
 ## Release History
 v.0.1.0 - initial setup, working version

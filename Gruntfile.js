@@ -1,6 +1,6 @@
 /*
  * grunt-ractive-parse
- * https://github.com/alisonailea/grunt-extjsractive-parse
+ * https://github.com/alisonailea/grunt-ractive-parse
  *
  * Copyright (c) 2014 Alison Stump
  * Licensed under the MIT license.
