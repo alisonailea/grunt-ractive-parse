@@ -1,7 +1,7 @@
 {
   "name": "grunt-ractive-parse",
   "description": "pre-parse Ractive templates for use in MVC projects",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "homepage": "https://github.com/alisonailea/grunt-ractive-parse",
   "author": {
     "name": "Alison Stump",
