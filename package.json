@@ -1,12 +1,11 @@
 {
-  "name": "grunt-ractive-parse",
-  "description": "pre-parse Ractive templates for use in MVC projects",
+  "name": "grunt-extjsractive-parse",
+  "description": "pre-parse Ractive templates for use in ExtJS projects",
   "version": "0.1.2",
-  "homepage": "https://github.com/alisonailea/grunt-ractive-parse",
+  "homepage": "https://github.com/alisonailea/grunt-extjsractive-parse",
   "author": {
     "name": "Alison Stump",
-    "email": "alison@alisonstump.com",
-    "url": "http://alisonstump.com"
+    "email": "alison@alisonstump.com"
   },
   "repository": {
     "type": "git",
