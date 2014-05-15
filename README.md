@@ -1,4 +1,4 @@
-# grunt-ractive-parse
+# grunt-ractive-parse for ExtJS
 
 > pre-parse Ractive templates for use in ExtJS projects
 
