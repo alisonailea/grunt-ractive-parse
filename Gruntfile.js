@@ -8,6 +8,7 @@
 
 'use strict';
 var Ractive = require('ractive'),
+    chalk = require('chalk'),
     path = require('path');
 
 module.exports = function (grunt) {
@@ -20,6 +21,8 @@ module.exports = function (grunt) {
           var templates = file.src.map(parse);
           grunt.file.write(file.dest,
               'Ext.define("Savanna.components.templates", {\n' + templates.join(',\n') + '\n}');
+
+          grunt.log.writeln(chalk.cyan(file.src) + ' parsed.');
       });
   }
 
