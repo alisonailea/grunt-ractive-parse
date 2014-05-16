@@ -21,8 +21,6 @@ module.exports = function (grunt) {
           var templates = file.src.map(parse);
           grunt.file.write(file.dest,
               'Ext.define("Savanna.components.templates", {\n' + templates.join(',\n') + '\n}');
-
-          grunt.log.writeln(chalk.cyan(file.src) + ' parsed.');
       });
   }
 
@@ -30,6 +28,8 @@ module.exports = function (grunt) {
       var name = path.basename(template, '.html'),
           html = grunt.file.read(template),
           parsed = Ractive.parse(html);
+
+      grunt.log.writeln(chalk.cyan(name) + '.html parsed.');
 
       return  '\t' + name + ': ' + JSON.stringify(parsed);
   }
