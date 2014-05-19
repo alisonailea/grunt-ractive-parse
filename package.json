@@ -26,6 +26,11 @@
   "scripts": {
     "test": "grunt test"
   },
+  "bundledDependencies" : [
+    "chalk", 
+    "path", 
+    "ractive"
+  ],
   "dependencies" : {
     "grunt": "^0.4.5",
     "chalk": "^0.4.0",
