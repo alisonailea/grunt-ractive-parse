@@ -1,36 +1,64 @@
 /*
  * grunt-ractive-parse
- * https://github.com/alisonailea/grunt-extjsractive-parse
+ * https://github.com/alisonailea/grunt-ractive-parse
  *
  * Copyright (c) 2014 Alison Stump
  * Licensed under the MIT license.
  */
+(function () {
+  'use strict';
+  module.exports = function (grunt) {
+    
+    grunt.initConfig({
+      pkg: {
+        name: 'grunt-ractive-parse'
+      },
+      jshint: {
+        options: {
+          jshintrc: '.jshintrc'
+        },
+        all: [
+          'Gruntfile.js',
+          'tasks/*.js'
+          // '<%= nodeunit.tests %>'
+        ]
+      },
+      clean: {
+        test: [
+          'test/tmp'
+        ]
+      },
+      // nodeunit: {
+      //   tests: ['test/*_test.js']
+      // },
+      ractiveParse: {
+        options: {
+          appName: 'MyApp',
+          type: 'extjs'
+        },
+        ractive: {
+          src: 'test/templ/*.html',
+          dest: 'test/tmp/templates.js'
+        }
+      }
+    });
 
-'use strict';
-var Ractive = require('ractive'),
-    chalk = require('chalk'),
-    path = require('path');
+    grunt.loadTasks('tasks');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-nodeunit');
+    grunt.loadNpmTasks('grunt-contrib-internal');
 
-module.exports = function (grunt) {
-  var desc = 'pre-parse Ractive templates for use in MVC projects';
-  
-  grunt.registerMultiTask('ractive_parse', desc, make);
+    grunt.registerTask('mkdir', grunt.file.mkdir);
+    grunt.registerTask('test', [
+      'clean',
+      'mkdir:test/tmp',
+      'ractiveParse',
+      // 'nodeunit',
+      'clean'
+    ]);
 
-  function make(){
-      this.files.forEach(function(file){
-          var templates = file.src.map(parse);
-          grunt.file.write(file.dest,
-              "Ext.define('Savanna.components.templates.templates', {\n" + templates.join(",\n") + "\n});");
-      });
-  }
-
-  function parse(template){
-      var name = path.basename(template, '.html'),
-          html = grunt.file.read(template),
-          parsed = Ractive.parse(html);
-
-      grunt.log.writeln(chalk.cyan(name) + '.html parsed.');
-
-      return  '\t' + name + ': ' + JSON.stringify(parsed);
-  }
-};
+    grunt.registerTask('default', ['jshint', 'test', 'build-contrib']);
+    // grunt.registerTask('default', ['ractiveParse']);
+  };
+}());

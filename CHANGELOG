@@ -1,0 +1,9 @@
+v0.2.0:
+ date: 2014-05-19
+ changes:
+   - Refactored to combine ractive-extparse and ractive-parse.
+
+v0.1.0:
+ date: 2014-05-16
+ changes:
+   - Initiated project.
