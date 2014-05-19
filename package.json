@@ -1,27 +1,36 @@
 {
   "name": "grunt-ractive-parse",
-  "description": "pre-parse Ractive templates for use in ExtJS projects",
+  "description": "Pre-parse Ractive templates for use in AMD projects \n options \n appName: 'name of your app (no spaces)' \n type: 'javascript' (default) || 'extjs'",
   "version": "0.2.0",
-  "homepage": "https://github.com/alisonailea/grunt-extjsractive-parse",
+  "homepage": "https://github.com/alisonailea/grunt-ractive-parse",
   "author": {
     "name": "Alison Stump",
     "email": "alison@alisonstump.com"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/alisonailea/grunt-extjsractive-parse.git"
+    "url": "git://github.com/alisonailea/grunt-ractive-parse.git"
   },
   "bugs": {
-    "url": "https://github.com/alisonailea/grunt-extjsractive-parse/issues"
+    "url": "https://github.com/alisonailea/grunt-ractive-parse/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/alisonailea/grunt-extjsractive-parse/blob/master/LICENSE-MIT"
+      "url": "https://github.com/alisonailea/grunt-ractive-parse/blob/master/LICENSE-MIT"
     }
   ],
   "engines": {
     "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "dependencies" : {
+    "grunt": "^0.4.5",
+    "chalk": "^0.4.0",
+    "path": "~0.4.9",
+    "ractive": "~0.4.0"
   },
   "devDependencies": {
     "grunt": "^0.4.5",

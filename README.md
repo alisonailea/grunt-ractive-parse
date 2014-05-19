@@ -1,6 +1,9 @@
 # grunt-ractive-parse v0.2.0
 
-> pre-parse Ractive templates for use in ExtJS projects
+> Pre-parse Ractive templates for use in AMD projects 
+ options 
+ appName: 'name of your app (no spaces)' 
+ type: 'javascript' (default) || 'extjs'
 
 
 
@@ -31,4 +34,4 @@ grunt.loadNpmTasks('grunt-ractive-parse');
 
 Task submitted by [Alison Stump](http://alisonstump.com)
 
-*This file was generated on Mon May 19 2014 14:20:21.*
+*This file was generated on Mon May 19 2014 14:36:19.*

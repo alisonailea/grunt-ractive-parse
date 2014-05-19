@@ -1,3 +1,5 @@
-'use strict';
-var grunt = require('grunt');
+(function () {
+  'use strict';
+  var grunt = require('grunt');
+}());
 
