@@ -12,25 +12,50 @@ var Ractive = require('ractive'),
     path = require('path');
 
 module.exports = function (grunt) {
-  var desc = 'pre-parse Ractive templates for use in MVC projects';
-  
+  var desc = 'pre-parse Ractive templates for use in MVC projects,',
+      templateJson = new Object();
   grunt.registerMultiTask('ractive_parse', desc, make);
 
   function make(){
       this.files.forEach(function(file){
-          var templates = file.src.map(parse);
+          file.src.map(parse);
+          var templates = arrify(),
+              templateFile = file.templateFile;
+
           grunt.file.write(file.dest,
-              "Ext.define('Savanna.components.templates.templates', {\n" + templates.join(",\n") + "\n});");
+              "Ext.define('Savanna.components.parsedTemplates." + templateFile +"', {\n" + templates.join(",\n") + "\n});");
       });
   }
 
   function parse(template){
       var name = path.basename(template, '.html'),
           html = grunt.file.read(template),
-          parsed = Ractive.parse(html);
+          parsed = Ractive.parse(html),
+          location = path.dirname(template);
+
+      var directoryName = location.match(/\/templates\/_core\/(\w+)/)[1];//location.substring(templateIndex, nextSlash);
+
 
       grunt.log.writeln(chalk.cyan(name) + '.html parsed.');
 
-      return  '\t' + name + ': ' + JSON.stringify(parsed);
+      var startInclude = '\n';
+      if (!templateJson[directoryName]) {
+          templateJson[directoryName] = [];
+          startInclude = ''
+      }
+
+      templateJson[directoryName].push(startInclude + '\t\t' + name + ': ' + JSON.stringify(parsed)) + ',';
   }
+
+    function arrify() {
+        var returnArray = [];
+
+        for (var prop in templateJson) {
+            if (templateJson.hasOwnProperty(prop)) {
+                returnArray.push('\t' + prop + ': {\n' + templateJson[prop] + '\n\t}');
+            }
+        }
+
+        return returnArray;
+    }
 };
