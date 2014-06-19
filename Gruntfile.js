@@ -13,32 +13,44 @@
       pkg: {
         name: 'grunt-ractive-parse'
       },
+      // JS Linting
       jshint: {
         options: {
           jshintrc: '.jshintrc'
         },
         all: [
           'Gruntfile.js',
-          'tasks/*.js'
-          // '<%= nodeunit.tests %>'
+          'tasks/*.js',
+          '<%= nodeunit.tests %>'
         ]
       },
+      // Clean folders before test/build
       clean: {
         test: [
           'test/tmp'
         ]
       },
-      // nodeunit: {
-      //   tests: ['test/*_test.js']
-      // },
+      // Unit Testing
+      nodeunit: {
+        tests: ['test/*_test.js']
+      },
+      // Ractive Parse
       ractiveParse: {
-        options: {
-          appName: 'MyApp',
-          type: 'extjs'
-        },
-        ractive: {
+        ractiveDefault:{
+          options: {
+            appName: 'MyApp'
+          },
           src: 'test/templ/*.html',
           dest: 'test/tmp/templates.js'
+        },
+        
+        ractiveExt: {
+          options: {
+            appName: 'MyApp',
+            type: 'extjs'
+          },
+          src: 'test/templ/*.html',
+          dest: 'test/tmp/extTemplates.js'
         }
       }
     });
@@ -54,11 +66,10 @@
       'clean',
       'mkdir:test/tmp',
       'ractiveParse',
-      // 'nodeunit',
+      'nodeunit',
       'clean'
     ]);
 
-    grunt.registerTask('default', ['jshint', 'test', 'build-contrib']);
-    // grunt.registerTask('default', ['ractiveParse']);
+    grunt.registerTask('default', ['jshint', 'test']);
   };
 }());

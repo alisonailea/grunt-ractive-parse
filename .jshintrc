@@ -1,8 +1,8 @@
 {
   "camelcase" : true,
+  "node": true,
   "curly": true,
-  "eqnull": true,
   "eqeqeq": true,
   "undef": true,
-  "predef": [ "module", "require" ]
+  "predef": []
 }

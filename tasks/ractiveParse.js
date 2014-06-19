@@ -19,7 +19,18 @@
         type: 'javascript' // type: 'javascript' (default) || 'extjs'
       });
 
+      // Check for Src Files
+      var files = this.files;
+      if(files[0] === undefined){
+        grunt.fail.warn('Can not find src files. Please check your Gruntfile configuration \n');
+      }
+
+      // Set Task as Asynchronous
+      var done = this.async();
+
+      // Loop through the src files then join them in a single Destination file.
       this.files.forEach(function(file){
+        
         // Define destination type
         options.destSyntax = setType(options, file.dest);
         
@@ -32,8 +43,9 @@
 
         // // Log success.
         grunt.log.writeln('File "' + chalk.cyan(file.dest) + '" created.');
-
       });
+
+      done();
     });
 
     function setType(options, path){
@@ -42,14 +54,14 @@
           return 'var templates =';
         case 'extjs':
           if(!options.appName){
-            grunt.fail.warn('You must define an "appName" in your config if you use the "extjs" type.');
+            grunt.fail.warn('You must define an "appName" in your config if you use the "extjs" type.\n');
           }
           var appPath = options.appName + '.' + path;
           var dotNotationPath = stringifyDest(appPath);
           return "Ext.define('" + dotNotationPath +"',";
         default:
           // warning
-          grunt.fail.warn('Unrecognized type. Please choose "javascript" or "extjs"');
+          grunt.fail.warn('Unrecognized type. Please choose "javascript" or "extjs"\n');
           return false;
       }
     }
