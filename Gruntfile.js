@@ -15,9 +15,7 @@
       },
       // JS Linting
       jshint: {
-        options: {
-          jshintrc: '.jshintrc'
-        },
+        
         all: [
           'Gruntfile.js',
           'tasks/*.js',
@@ -65,8 +63,8 @@
     grunt.registerTask('test', [
       'clean',
       'mkdir:test/tmp',
-      'ractiveparse'
-      // 'nodeunit',
+      'ractiveparse',
+      // 'nodeunit'
       // 'clean'
     ]);
 
