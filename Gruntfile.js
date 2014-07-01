@@ -1,61 +1,75 @@
 /*
  * grunt-ractive-parse
- * https://github.com/alisonailea/grunt-extjsractive-parse
+ * https://github.com/alisonailea/grunt-ractive-parse
  *
- * Copyright (c) 2014 Alison Stump
+ * Copyright (c) 2014 Alison Stump, contributors
  * Licensed under the MIT license.
  */
-
-'use strict';
-var Ractive = require('ractive'),
-    chalk = require('chalk'),
-    path = require('path');
-
-module.exports = function (grunt) {
-  var desc = 'pre-parse Ractive templates for use in MVC projects,',
-      templateJson = new Object();
-  grunt.registerMultiTask('ractive_parse', desc, make);
-
-  function make(){
-      this.files.forEach(function(file){
-          file.src.map(parse);
-          var templates = arrify(),
-              templateFile = file.templateFile;
-
-          grunt.file.write(file.dest,
-              "Ext.define('Savanna.components.parsedTemplates." + templateFile +"', {\n" + templates.join(",\n") + "\n});");
-      });
-  }
-
-  function parse(template){
-      var name = path.basename(template, '.html'),
-          html = grunt.file.read(template),
-          parsed = Ractive.parse(html),
-          location = path.dirname(template);
-
-      var directoryName = location.match(/\/templates\/_core\/(\w+)/)[1];//location.substring(templateIndex, nextSlash);
-
-
-      grunt.log.writeln(chalk.cyan(name) + '.html parsed.');
-
-      var startInclude = '\n';
-      if (!templateJson[directoryName]) {
-          templateJson[directoryName] = [];
-          startInclude = ''
-      }
-
-      templateJson[directoryName].push(startInclude + '\t\t' + name + ': ' + JSON.stringify(parsed)) + ',';
-  }
-
-    function arrify() {
-        var returnArray = [];
-
-        for (var prop in templateJson) {
-            if (templateJson.hasOwnProperty(prop)) {
-                returnArray.push('\t' + prop + ': {\n' + templateJson[prop] + '\n\t}');
-            }
+(function () {
+  'use strict';
+  module.exports = function (grunt) {
+    
+    grunt.initConfig({
+      pkg: {
+        name: 'grunt-ractive-parse'
+      },
+      // JS Linting
+      jshint: {
+        options: {
+          jshintrc: '.jshintrc'
+        },
+        all: [
+          'Gruntfile.js',
+          'tasks/*.js',
+          '<%= nodeunit.tests %>'
+        ]
+      },
+      // Clean folders before test/build
+      clean: {
+        test: [
+          'test/tmp'
+        ]
+      },
+      // Unit Testing
+      nodeunit: {
+        tests: ['test/*_test.js']
+      },
+      // Ractive Parse
+      ractiveparse: {
+        ractiveDefault:{
+          options: {
+            appName: 'MyApp'
+          },
+          src: 'test/templ/*',
+          dest: 'test/tmp/templates.js'
+        },
+        
+        ractiveExt: {
+          options: {
+            appName: 'MyApp',
+            type: 'extjs'
+          },
+          src: 'test/templ/*',
+          dest: 'test/tmp/extTemplates.js'
         }
+      }
+    });
 
-        return returnArray;
-    }
-};
+    grunt.loadTasks('tasks');
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-nodeunit');
+    grunt.loadNpmTasks('grunt-contrib-internal');
+
+    grunt.registerTask('mkdir', grunt.file.mkdir);
+    grunt.registerTask('test', [
+      'clean',
+      'mkdir:test/tmp',
+      'ractiveparse'
+      // 'nodeunit',
+      // 'clean'
+    ]);
+
+    grunt.registerTask('default', ['jshint', 'test']);
+  };
+}());
