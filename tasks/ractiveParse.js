@@ -9,6 +9,7 @@
 'use strict';
 var Ractive = require('ractive'),
     chalk = require('chalk'),
+    fs = require('fs'),
     path = require('path');
 
 module.exports = function (grunt) {
@@ -49,7 +50,7 @@ module.exports = function (grunt) {
           file.src.map(parse);
           // console.log(templateJson);
 
-          templates = arrify();
+          templates = arrify(templateJson);
           // console.log(templates);
 
           templateFile = file.templateFile;
@@ -105,53 +106,111 @@ module.exports = function (grunt) {
   }
 
   function parse(template){
-      var name = path.basename(template),
-          location = path.dirname(template),
-          baseDir = grunt.option('baseDir'),
-          matchFolder = new RegExp("\\w*$"),
-          currentDir = matchFolder.exec(location)[0];
 
-      // Check if name is a file or folder
-      if(/.html/g.test(name)){
-        // This is a file
-        var html = grunt.file.read(template),
-            parsed = Ractive.parse(html),
-            stringArray = location.split('/');
+    if (!templateJson.templates) {
+      templateJson.templates = [];
+    }
 
-        grunt.log.writeln(chalk.cyan(name) + ' parsed.');
+    templateJson.templates.push(dirTree(template));
+
+      // var name = path.basename(template),
+      //     location = path.dirname(template),
+      //     baseDir = grunt.option('baseDir'),
+      //     matchFolder = new RegExp("\\w*$"),
+      //     currentDir = matchFolder.exec(location)[0];
+
+      // // Check if name is a file or folder
+      // if(/.html/g.test(name)){
+      //   // This is a file
+      //   var html = grunt.file.read(template),
+      //       parsed = Ractive.parse(html),
+      //       stringArray = location.split('/');
+
+      //   grunt.log.writeln(chalk.cyan(name) + ' parsed.');
         
-        var startInclude = '\n';
+      //   var startInclude = '\n';
 
-        // var jsonKey = getKeys(templateJson, currentDir);
-        if (!templateJson[currentDir]) {
-          templateJson[currentDir] = [];
-          startInclude = ''; 
-        }
+      //   // var jsonKey = getKeys(templateJson, currentDir);
+      //   if (!templateJson[currentDir]) {
+      //     templateJson[currentDir] = [];
+      //     startInclude = ''; 
+      //   }
 
-        templateJson[currentDir].push(startInclude + '\t\t' + name + ': ' + JSON.stringify(parsed));// + ',';
+      //   templateJson[currentDir].push(startInclude + '\t\t' + name + ': ' + JSON.stringify(parsed));// + ',';
 
-      } else {
-        // This is a folder
-        var files = grunt.file.expand(location+'/'+name+'/*');
+      // } else {
+      //   // This is a folder
+      //   var files = grunt.file.expand(location+'/'+name+'/*');
         
-        // parentDir = location;
+      //   // parentDir = location;
 
-        files.forEach(function(file){
-          // file.src.map(parse);
-          parse(file);
-        });
-      }
+      //   files.forEach(function(file){
+      //     // file.src.map(parse);
+      //     parse(file);
+      //   });
+      // }
   }
 
-    function arrify() {
-        var returnArray = [];
+  // function dirTree(filename) {
+  //     var stats = fs.lstatSync(filename),
+  //         info = {
+  //             path: filename,
+  //             name: path.basename(filename)
+  //         };
+      
+  //     if (stats.isDirectory()) {
+  //         info.type = "folder";
+  //         info.children = fs.readdirSync(filename).map(function(child) {
+  //             return dirTree(filename + '/' + child);
+  //         });
+  //     } else {
+  //         // Assuming it's a file. In real life it could be a symlink or
+  //         // something else!
+  //         var html = grunt.file.read(filename);
 
-        for (var prop in templateJson) {
-            if (templateJson.hasOwnProperty(prop)) {
-                returnArray.push('\t' + prop + ': {\n' + templateJson[prop] + '\n\t}');
-            }
-        }
+  //         info.type = "file";
+  //         info.parsed = JSON.stringify(Ractive.parse(html));
+  //     }
 
-        return returnArray;
-    }
+  //     return arrify(info);
+  // }
+  function dirTree(filename) {
+      var stats = fs.lstatSync(filename),
+          matchExtension = new RegExp(/\.\w*/),
+          name = path.basename(filename).replace(matchExtension, ''),
+          info = {
+              // path: filename,
+              // name: path.basename(filename)
+          };
+      
+      if (stats.isDirectory()) {
+          // info.type = "folder";
+          info[name] = '\n'+fs.readdirSync(filename).map(function(child) {
+              return dirTree(filename + '/' + child);
+          });
+      } else {
+          // Assuming it's a file. In real life it could be a symlink or
+          // something else!
+          var html = grunt.file.read(filename);
+
+          // info.type = "file";
+          // info[name] = JSON.stringify(Ractive.parse(html));
+          return '\n'+name + ' : ' + JSON.stringify(Ractive.parse(html));
+      }
+
+      return '\n'+arrify(info);
+  }
+
+  function arrify(templateObject) {
+      var returnArray = [];
+
+      for (var prop in templateObject) {
+          if (templateObject.hasOwnProperty(prop)) {
+
+              returnArray.push('\t' + prop + ': {' + templateObject[prop] + '\n\t}');
+          }
+      }
+
+      return returnArray;
+  }
 };
