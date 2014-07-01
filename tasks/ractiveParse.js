@@ -12,24 +12,25 @@ var Ractive = require('ractive'),
     fs = require('fs'),
     path = require('path');
 
-module.exports = function (grunt) {
+module.exports = function (grunt, options) {
   // Task Variables
   var desc = 'pre-parse Ractive templates for use in MVC projects,',
-      templateJson = {};
+      templateJson = {},
+      baseDir;
 
   // The Grunt Task    
   grunt.registerMultiTask('ractiveparse', desc, make);
 
   function make(){
       // set the default options
-        /*jshint validthis:true */
-      var files, options = this.options({
-        type: 'javascript' // type: 'javascript' (default) || 'extjs'
-      }),
-          baseDir = this.filesSrc[0].replace(/\/\w*.\w*$/, '');
-
-      // set a grunt option BaseDir
-      grunt.option('baseDir', baseDir);
+       /*jshint validthis:true */
+      var files, 
+          options = this.options({
+            type: 'javascript' // type: 'javascript' (default) || 'extjs'
+          });
+      
+      // Identify the base directory using the path of the first element
+      baseDir = this.filesSrc[0].replace(/[^\/]*$/, '');
 
       // Check for src files
       if(this.files[0] === undefined){
@@ -48,21 +49,20 @@ module.exports = function (grunt) {
 
           // Parse the template src files
           file.src.map(parse);
-          // console.log(templateJson);
-
+          
           templates = arrify(templateJson);
-          // console.log(templates);
-
+          
           templateFile = file.templateFile;
 
           // Join parsed files and write them to a new file.
           grunt.file.write(file.dest,
-              options.destSyntax + " {\n" + templates.join(",\n") + "\n});");
-              // "Ext.define('Savanna.components.parsedTemplates." + templateFile +"', {\n" + templates.join(",\n") + "\n});");
-
+              options.destSyntax + " {\n" + templates.join(",\n") + "\n\n});");
+              
           // Log success.
           grunt.log.writeln('File "' + chalk.cyan(file.dest) + '" created.');
       });
+
+      templateJson = {};
   }
 
   function setType(options, path){
@@ -112,102 +112,62 @@ module.exports = function (grunt) {
     }
 
     templateJson.templates.push(dirTree(template));
-
-      // var name = path.basename(template),
-      //     location = path.dirname(template),
-      //     baseDir = grunt.option('baseDir'),
-      //     matchFolder = new RegExp("\\w*$"),
-      //     currentDir = matchFolder.exec(location)[0];
-
-      // // Check if name is a file or folder
-      // if(/.html/g.test(name)){
-      //   // This is a file
-      //   var html = grunt.file.read(template),
-      //       parsed = Ractive.parse(html),
-      //       stringArray = location.split('/');
-
-      //   grunt.log.writeln(chalk.cyan(name) + ' parsed.');
-        
-      //   var startInclude = '\n';
-
-      //   // var jsonKey = getKeys(templateJson, currentDir);
-      //   if (!templateJson[currentDir]) {
-      //     templateJson[currentDir] = [];
-      //     startInclude = ''; 
-      //   }
-
-      //   templateJson[currentDir].push(startInclude + '\t\t' + name + ': ' + JSON.stringify(parsed));// + ',';
-
-      // } else {
-      //   // This is a folder
-      //   var files = grunt.file.expand(location+'/'+name+'/*');
-        
-      //   // parentDir = location;
-
-      //   files.forEach(function(file){
-      //     // file.src.map(parse);
-      //     parse(file);
-      //   });
-      // }
   }
 
-  // function dirTree(filename) {
-  //     var stats = fs.lstatSync(filename),
-  //         info = {
-  //             path: filename,
-  //             name: path.basename(filename)
-  //         };
-      
-  //     if (stats.isDirectory()) {
-  //         info.type = "folder";
-  //         info.children = fs.readdirSync(filename).map(function(child) {
-  //             return dirTree(filename + '/' + child);
-  //         });
-  //     } else {
-  //         // Assuming it's a file. In real life it could be a symlink or
-  //         // something else!
-  //         var html = grunt.file.read(filename);
-
-  //         info.type = "file";
-  //         info.parsed = JSON.stringify(Ractive.parse(html));
-  //     }
-
-  //     return arrify(info);
-  // }
   function dirTree(filename) {
       var stats = fs.lstatSync(filename),
           matchExtension = new RegExp(/\.\w*/),
           name = path.basename(filename).replace(matchExtension, ''),
           info = {
-              // path: filename,
-              // name: path.basename(filename)
+              path: filename
           };
-      
+
       if (stats.isDirectory()) {
-          // info.type = "folder";
-          info[name] = '\n'+fs.readdirSync(filename).map(function(child) {
+          info[name] = '\t'+fs.readdirSync(filename).map(function(child) {
               return dirTree(filename + '/' + child);
           });
       } else {
-          // Assuming it's a file. In real life it could be a symlink or
-          // something else!
-          var html = grunt.file.read(filename);
+          // Assuming it's a file.
+          var html = grunt.file.read(filename),
+              tabs = function(){
+                var string = '\t\t\t',
+                    path = info.path.replace(baseDir, '').split('/');
 
-          // info.type = "file";
-          // info[name] = JSON.stringify(Ractive.parse(html));
-          return '\n'+name + ' : ' + JSON.stringify(Ractive.parse(html));
+                if(path.length > 1){
+                  for(var i=0;i<path.length;i++){
+                    string = string + '\t';
+                  }
+                }
+                
+                return string;
+              };
+
+          return '\n'+ tabs() + name + ' : ' + JSON.stringify(Ractive.parse(html));
       }
 
-      return '\n'+arrify(info);
+      return arrify(info);
   }
 
   function arrify(templateObject) {
-      var returnArray = [];
+      var returnArray = [],
+          tabs = '\t\t';
+
+      if(templateObject.path){
+        var string = tabs,
+            path = templateObject.path.replace(baseDir, '').split('/');
+
+        for(var i=0;i<path.length;i++){
+          string = string + '\t';
+        }
+
+        tabs = string;
+      }
 
       for (var prop in templateObject) {
           if (templateObject.hasOwnProperty(prop)) {
-
-              returnArray.push('\t' + prop + ': {' + templateObject[prop] + '\n\t}');
+              if(prop !== 'path'){
+                returnArray.push('\n'+tabs + prop + ': {' + tabs + templateObject[prop] + '\n'+ tabs + '}');
+              }
           }
       }
 
