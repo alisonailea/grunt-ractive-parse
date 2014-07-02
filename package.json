@@ -1,7 +1,7 @@
 {
   "name": "grunt-ractive-parse",
-  "description": "Pre-parse Ractive templates for use in AMD projects \n options \n appName: 'name of your app (no spaces)' \n type: 'javascript' (default) || 'extjs'",
-  "version": "1.0",
+  "description": "Pre-parse Ractive templates for use in ExtJS or other MVC projects \n options \n appName: 'name of your app (no spaces)' \n type: 'javascript' (default) || 'extjs'",
+  "version": "1.0.1",
   "homepage": "https://github.com/alisonailea/grunt-ractive-parse",
   "author": {
     "name": "Alison Stump",
@@ -11,6 +11,7 @@
     "type": "git",
     "url": "git://github.com/alisonailea/grunt-ractive-parse.git"
   },
+  "main": "task/ractiveParse.js",
   "bugs": {
     "url": "https://github.com/alisonailea/grunt-ractive-parse/issues"
   },
@@ -23,10 +24,7 @@
   "engines": {
     "node": ">= 0.8.0"
   },
-  "scripts": {
-    "test": "grunt test"
-  },
-  "dependencies" : {
+  "dependencies": {
     "grunt": "^0.4.5",
     "chalk": "^0.4.0",
     "path": "~0.4.9",

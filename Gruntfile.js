@@ -5,6 +5,7 @@
  * Copyright (c) 2014 Alison Stump, contributors
  * Licensed under the MIT license.
  */
+ 
 (function () {
   'use strict';
   module.exports = function (grunt) {
@@ -53,19 +54,18 @@
       }
     });
 
-    grunt.loadTasks('tasks');
+    grunt.loadTasks('task');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-nodeunit');
-    grunt.loadNpmTasks('grunt-contrib-internal');
 
     grunt.registerTask('mkdir', grunt.file.mkdir);
     grunt.registerTask('test', [
       'clean',
       'mkdir:test/tmp',
       'ractiveparse',
-      // 'nodeunit'
-      // 'clean'
+      'nodeunit',
+      'clean'
     ]);
 
     grunt.registerTask('default', ['jshint', 'test']);

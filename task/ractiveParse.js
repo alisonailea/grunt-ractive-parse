@@ -2,9 +2,10 @@
  * grunt-ractive-parse
  * https://github.com/alisonailea/grunt-ractive-parse
  *
- * Copyright (c) 2014 Alison Stump, contributors
+ * Copyright (c) 2014 Alison Stump, Edward Irby, contributors
  * Licensed under the MIT license.
  */
+
 (function () {
   'use strict';
   var Ractive = require('ractive'),
@@ -12,7 +13,8 @@
       fs = require('fs'),
       path = require('path');
 
-  module.exports = function (grunt, options) {
+  module.exports = function (grunt) {
+
     // Task Variables
     var desc = 'pre-parse Ractive templates for use in MVC projects,',
         templateJson = {},
