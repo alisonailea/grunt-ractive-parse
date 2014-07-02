@@ -1,7 +1,7 @@
 {
   "name": "grunt-ractive-parse",
   "description": "Pre-parse Ractive templates for use in ExtJS or other MVC projects \n options \n appName: 'name of your app (no spaces)' \n type: 'javascript' (default) || 'extjs'",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "homepage": "https://github.com/alisonailea/grunt-ractive-parse",
   "author": {
     "name": "Alison Stump",
