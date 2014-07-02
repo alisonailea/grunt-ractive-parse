@@ -1,11 +1,6 @@
 # grunt-ractive-parse v1.0.3
 
 > Pre-parse Ractive templates for use in ExtJS or other MVC projects
- options 
- appName: 'name of your app (no spaces)' 
- type: 'javascript' (default) || 'extjs'
-
-
 
 ## Getting Started
 This plugin requires Grunt `~0.4.5`
