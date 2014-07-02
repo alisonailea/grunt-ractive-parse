@@ -27,7 +27,6 @@ grunt.loadNpmTasks('grunt-ractive-parse');
 
 ## Release History
 
- * 2014-05-19   v0.2.0   Refactored to combine ractive-extparse and ractive-parse.
  * 2014-05-16   v0.1.0   Initiated project.
  * 2014-07-01   v1.0.0   Initial release of project.
 
