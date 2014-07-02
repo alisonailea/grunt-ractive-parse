@@ -1,4 +1,4 @@
-# grunt-ractive-parse v1.0.3
+# grunt-ractive-parse v1.0.4
 
 > Pre-parse Ractive templates for use in ExtJS or other MVC projects
 

@@ -1,10 +1,7 @@
 .git*
-.npmignore
-node_modules/
 test/
 .DS_Store
 .travis.yml
 Contributing.md
 CHANGELOG
-Gruntfile.js
 npm-debug.log
