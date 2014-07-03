@@ -132,6 +132,6 @@ Please see the [Contributing to grunt](http://gruntjs.com/contributing) guide fo
 
 ## Release History
 * 2014-05-16   v0.1.0   Initiated project.
-* 2014-07-01   v1.0.0   Initial release of project.
-* 2014-07-02   v1.2.0   Published to NPM
-* 2014-07-03   v1.3.0   Added additional build options
+* 2014-05-16   v1.0.0   Initial release of project.
+* 2014-05-16   v1.2.0   Published to NPM
+* 2014-05-16   v1.3.0   Added additional build options
