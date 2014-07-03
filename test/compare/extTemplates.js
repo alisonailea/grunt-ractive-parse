@@ -1,4 +1,4 @@
-Ext.define('MyApp.test.tmp.ExtTemplates', {
+Ext.define('MyApp.extTemplates', {
 
 		templates: {		
 			blah: {				

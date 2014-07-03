@@ -42,16 +42,17 @@
             appName: 'MyApp'
           },
           src: 'test/templ/*',
-          dest: 'test/tmp/templates.js'
+          dest: 'test/tmp/app/templates.js'
         },
 
         ractiveExt: {
           options: {
             appName: 'MyApp',
-            type: 'extjs'
+            type: 'extjs',
+            ignore: 'test/tmp/app/'
           },
           src: 'test/templ/*',
-          dest: 'test/tmp/extTemplates.js'
+          dest: 'test/tmp/app/extTemplates.js'
         }
       }
     });
@@ -63,7 +64,7 @@
 
     grunt.registerTask('test', [
       'clean',
-      'mkdir:test/tmp',
+      'mkdir:test/tmp/app',
       'ractiveparse',
       'nodeunit',
       'clean'

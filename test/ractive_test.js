@@ -7,7 +7,7 @@
     var js = 'templates.js';
 
     var compareFolder = __dirname+'/compare';
-    var tmpFolder = __dirname+'/tmp';
+    var tmpFolder = __dirname+'/tmp/app';
 
     var compare = {};
         compare.ext = grunt.file.read(compareFolder+'/'+ext);

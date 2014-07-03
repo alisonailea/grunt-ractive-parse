@@ -53,6 +53,12 @@ Default value: 'javascript'
 A string value that is used to identify the syntax of the parsed templates file.
 Options are 'javascript' || 'extjs'
 
+#### options.ignore
+Type: `String`
+Default value: '' 
+
+A string value path that is used to identify folder names to skip when creating the ExtJS class name.
+
 ### Usage Examples
 
 #### Default Options
@@ -68,28 +74,53 @@ grunt.initConfig({
 });
 ```
 
-#### Custom Options
+#### Custom Options 
 In this example, custom options are used to do set the final javascript template file as an Sencha ExtJS class. 
 The appName must match the name of your ExtJS applicaiton. The class path will automatically be set using the appName + the path to your final destination template.
 
+*Example*
+
+Gruntfile.js
 ```js
 grunt.initConfig({
   ractiveparse: {
     options: {
       appName: 'MyApp',
       type: 'extjs',
+      ignore: 'app/'
     },
     src: 'templates/*',
-    dest: 'code/templates.js'
+    dest: 'app/templates/templates.js'
   },
 });
 ```
 
-In this example the final template will look like...
+File Structure
+```
+MyApp/
+  |- index.html
+
+  |- app/
+    |- templates/
+
+  |- templates/
+    |- temp1.html
+    |- temp2.html
+    |- one/
+      |- onetemp1.html
+      |- onetemp2.html
+```
+
+MyApp/app/templates/templates.js
 ```js
-Ext.define('MyApp.code.Templates', {
+Ext.define('MyApp.templates.Templates', {
   templates: {
-    //... your template code here ..
+    temp1 : [{"t":7,"e":"div","a":{"class":"box"},"f":[{"t":2,"x":{"r":["box","content"],"s":"${0}-${1}"}}]}],
+    temp2 : [{"t":7,"e":"button","a":{"class":"btn"},"f":[{"t":2,"x":{"r":["button","label"],"s":"${0}-${1}"}}]}],
+    one: {        
+        onetemp1 : [{"t":7,"e":"div","a":{"class":"box"},"f":[{"t":2,"x":{"r":["box","content"],"s":"${0}-${1}"}}]}],
+        onetemp2 : [{"t":7,"e":"button","a":{"class":"btn"},"f":[{"t":2,"x":{"r":["button","label"],"s":"${0}-${1}"}}]}]
+    }
   }
 })
 ```

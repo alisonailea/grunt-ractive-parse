@@ -67,7 +67,7 @@
         templateJson = {};
     }
 
-    function setType(options, path){
+    function setType(options, filePath){
       switch (options.type){
         case 'javascript':
           return 'var templates =';
@@ -78,7 +78,10 @@
           if(!options.appName){
             grunt.fail.warn('You must define an "appName" in your config if you use the "extjs" type.\nThis appName should be the same as the name of your ExtJS Application\n');
           } else {
-            appPath = options.appName + '.' + path;
+            if(options.ignore){
+              filePath = path.normalize(filePath.replace(options.ignore, ''));
+            }
+            appPath = options.appName + '.' + filePath;
             dotNotationPath = stringifyDest(appPath);
           }
           return "Ext.define('" + dotNotationPath +"',";
@@ -90,13 +93,13 @@
       }
     }
 
-    function stringifyDest(path){
+    function stringifyDest(filePath){
       // Reasses this function. There is probably a better way to do this.
       // remove the file extension
-      var dotPath = path.replace(/\.\w*$/, '');
+      var dotPath = filePath.replace(/\.\w*$/, '');
 
-      // break path up by '/' and remove the last word (the file name),
-      // capitalize the last word then puth the path back together with '.'
+      // break filePath up by '/' and remove the last word (the file name),
+      // capitalize the last word then puth the filePath back together with '.'
       var pathArray = dotPath.split('/');
       var file = pathArray.pop();
       var fileToUppercase = file.charAt(0).toUpperCase() + file.slice(1);
