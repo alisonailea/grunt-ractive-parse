@@ -18,7 +18,8 @@
     // Task Variables
     var desc = 'pre-parse Ractive templates for use in MVC projects,',
         templateJson = {},
-        baseDir;
+        baseDir,
+        options;
 
     // The Grunt Task
     grunt.registerMultiTask('ractiveparse', desc, make);
@@ -26,10 +27,11 @@
     function make(){
         // set the default options
          /*jshint validthis:true */
-        var files,
-            options = this.options({
-              type: 'javascript' // type: 'javascript' (default) || 'extjs'
-            });
+        var files;
+
+        options = this.options({
+          type: 'javascript' // type: 'javascript' (default) || 'extjs'
+        });
 
         // Identify the base directory using the path of the first element
         baseDir = this.filesSrc[0].replace(/[^\/]*$/, '');
@@ -47,7 +49,7 @@
                 templateFile;
 
             // Define destination type
-            options.destSyntax = setType(options, file.dest);
+            options.destSyntax = setType(file.dest);
 
             // Parse the template src files
             file.src.map(parse);
@@ -67,7 +69,10 @@
         templateJson = {};
     }
 
-    function setType(options, filePath){
+    function setType(filePath){
+
+      filePath = path.normalize(filePath);
+
       switch (options.type){
         case 'javascript':
           return 'var templates =';
@@ -78,13 +83,10 @@
           if(!options.appName){
             grunt.fail.warn('You must define an "appName" in your config if you use the "extjs" type.\nThis appName should be the same as the name of your ExtJS Application\n');
           } else {
-            if(options.ignore){
-              filePath = path.normalize(filePath.replace(options.ignore, ''));
-            }
-            appPath = options.appName + '.' + filePath;
-            dotNotationPath = stringifyDest(appPath);
+            var newPath = stringifyDest(filePath);
+            appPath = options.appName + '.' + newPath;
           }
-          return "Ext.define('" + dotNotationPath +"',";
+          return "Ext.define('" + appPath +"',";
 
         default:
           // warning
@@ -94,7 +96,7 @@
     }
 
     function stringifyDest(filePath){
-      // Reasses this function. There is probably a better way to do this.
+
       // remove the file extension
       var dotPath = filePath.replace(/\.\w*$/, '');
 
@@ -102,6 +104,26 @@
       // capitalize the last word then puth the filePath back together with '.'
       var pathArray = dotPath.split('/');
       var file = pathArray.pop();
+
+      if(options.ignore){
+        var removePathArray = options.ignore;
+        var newPathArray = pathArray;
+            removePathArray = removePathArray.split('/');
+
+        for(var i = pathArray.length; i>-1; i--){
+          var path = newPathArray[i];
+
+          for(var j = 0; j<removePathArray.length; j++){
+            var drop = removePathArray[j];
+
+            if (drop === path){
+              var remove = newPathArray.splice(i, 1);
+            }
+          }
+        }
+        pathArray = newPathArray;
+      }
+
       var fileToUppercase = file.charAt(0).toUpperCase() + file.slice(1);
           pathArray.push(fileToUppercase);
           dotPath = pathArray.join('.');

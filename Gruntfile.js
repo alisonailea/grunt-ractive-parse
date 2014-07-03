@@ -49,7 +49,7 @@
           options: {
             appName: 'MyApp',
             type: 'extjs',
-            ignore: 'test/tmp/app/'
+            ignore: 'test/tmp'
           },
           src: 'test/templ/*',
           dest: 'test/tmp/app/extTemplates.js'
@@ -66,8 +66,8 @@
       'clean',
       'mkdir:test/tmp/app',
       'ractiveparse',
-      'nodeunit',
-      'clean'
+      // 'nodeunit',
+      // 'clean'
     ]);
 
     grunt.registerTask('default', ['jshint', 'test']);
