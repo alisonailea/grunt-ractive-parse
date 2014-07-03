@@ -20,17 +20,17 @@
         templateJson = {},
         baseDir;
 
-    // The Grunt Task    
+    // The Grunt Task
     grunt.registerMultiTask('ractiveparse', desc, make);
 
     function make(){
         // set the default options
          /*jshint validthis:true */
-        var files, 
+        var files,
             options = this.options({
               type: 'javascript' // type: 'javascript' (default) || 'extjs'
             });
-        
+
         // Identify the base directory using the path of the first element
         baseDir = this.filesSrc[0].replace(/[^\/]*$/, '');
 
@@ -51,15 +51,15 @@
 
             // Parse the template src files
             file.src.map(parse);
-            
+
             templates = arrify(templateJson);
-            
+
             templateFile = file.templateFile;
 
             // Join parsed files and write them to a new file.
             grunt.file.write(file.dest,
                 options.destSyntax + " {\n" + templates.join(",\n") + "\n\n});");
-                
+
             // Log success.
             grunt.log.writeln('File "' + chalk.cyan(file.dest) + '" created.');
         });
@@ -71,7 +71,7 @@
       switch (options.type){
         case 'javascript':
           return 'var templates =';
-        
+
         case 'extjs':
           var dotNotationPath,
               appPath;
@@ -82,27 +82,27 @@
             dotNotationPath = stringifyDest(appPath);
           }
           return "Ext.define('" + dotNotationPath +"',";
-        
+
         default:
           // warning
           grunt.fail.warn('Unrecognized type. Please choose "javascript" or "extjs"\n');
           return false;
       }
     }
-    
+
     function stringifyDest(path){
       // Reasses this function. There is probably a better way to do this.
       // remove the file extension
       var dotPath = path.replace(/\.\w*$/, '');
 
-      // break path up by '/' and remove the last word (the file name), 
+      // break path up by '/' and remove the last word (the file name),
       // capitalize the last word then puth the path back together with '.'
       var pathArray = dotPath.split('/');
       var file = pathArray.pop();
       var fileToUppercase = file.charAt(0).toUpperCase() + file.slice(1);
           pathArray.push(fileToUppercase);
           dotPath = pathArray.join('.');
-      
+
       return dotPath;
     }
 
@@ -139,7 +139,7 @@
                       string = string + '\t';
                     }
                   }
-                  
+
                   return string;
                 };
 

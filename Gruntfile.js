@@ -5,18 +5,20 @@
  * Copyright (c) 2014 Alison Stump, contributors
  * Licensed under the MIT license.
  */
- 
+
 (function () {
   'use strict';
   module.exports = function (grunt) {
-    
+    // load all npm grunt tasks
+    require('load-grunt-tasks')(grunt);
+
     grunt.initConfig({
       pkg: {
         name: 'grunt-ractive-parse'
       },
       // JS Linting
       jshint: {
-        
+
         all: [
           'Gruntfile.js',
           'tasks/*.js',
@@ -42,7 +44,7 @@
           src: 'test/templ/*',
           dest: 'test/tmp/templates.js'
         },
-        
+
         ractiveExt: {
           options: {
             appName: 'MyApp',
@@ -54,12 +56,11 @@
       }
     });
 
-    grunt.loadTasks('task');
-    grunt.loadNpmTasks('grunt-contrib-clean');
-    grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-nodeunit');
+    // Actually load this plugin's task(s).
+    grunt.loadTasks('tasks');
 
     grunt.registerTask('mkdir', grunt.file.mkdir);
+
     grunt.registerTask('test', [
       'clean',
       'mkdir:test/tmp',

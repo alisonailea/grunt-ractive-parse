@@ -1,7 +1,9 @@
-.git*
-test/
-.DS_Store
-.travis.yml
-Contributing.md
-CHANGELOG
+node_modules
 npm-debug.log
+tmp
+test
+.editorconfig
+.gitnore
+.npmignore
+CONTRIBUTING.md
+Gruntfile.js
