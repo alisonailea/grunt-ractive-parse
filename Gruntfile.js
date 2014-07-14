@@ -9,8 +9,6 @@
 (function () {
   'use strict';
   module.exports = function (grunt) {
-    // load all npm grunt tasks
-    require('load-grunt-tasks')(grunt);
 
     grunt.initConfig({
       pkg: {
@@ -49,7 +47,7 @@
           options: {
             appName: 'MyApp',
             type: 'extjs',
-            ignore: 'test/tmp'
+            ignore: 'test/tmp/app'
           },
           src: 'test/templ/*',
           dest: 'test/tmp/app/extTemplates.js'
@@ -57,17 +55,21 @@
       }
     });
 
+    // Load Grunt tasks for testing and such
+    grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-nodeunit');
+
     // Actually load this plugin's task(s).
     grunt.loadTasks('tasks');
 
     grunt.registerTask('mkdir', grunt.file.mkdir);
-
     grunt.registerTask('test', [
       'clean',
       'mkdir:test/tmp/app',
       'ractiveparse',
-      // 'nodeunit',
-      // 'clean'
+      'nodeunit',
+      'clean'
     ]);
 
     grunt.registerTask('default', ['jshint', 'test']);
