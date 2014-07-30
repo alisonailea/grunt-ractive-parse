@@ -53,7 +53,7 @@ Default value: 'javascript'
 A string value that is used to identify the syntax of the parsed templates file.
 Options are 'javascript' || 'extjs'
 
-#### options.ignore
+#### options.ignorePath
 Type: `String`
 Default value: '' 
 
@@ -87,7 +87,7 @@ grunt.initConfig({
     options: {
       appName: 'MyApp',
       type: 'extjs',
-      ignore: 'app/'
+      ignorePath: 'app/'
     },
     src: 'templates/*',
     dest: 'app/templates/templates.js'

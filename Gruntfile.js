@@ -47,7 +47,7 @@
           options: {
             appName: 'MyApp',
             type: 'extjs',
-            ignore: 'test/tmp/app'
+            ignorePath: 'test/tmp/app'
           },
           src: 'test/templ/*',
           dest: 'test/tmp/app/extTemplates.js'

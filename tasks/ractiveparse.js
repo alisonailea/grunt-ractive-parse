@@ -99,14 +99,26 @@
 
       // remove the file extension
       var dotPath = filePath.replace(/\.\w*$/, '');
+      // create Array to hold sections of the path.
+      var pathArray = [];
 
-      // break filePath up by '/' and remove the last word (the file name),
+      // break filePath up by '/' OR '\' and remove the last word (the file name),
       // capitalize the last word then puth the filePath back together with '.'
-      var pathArray = dotPath.split('/');
+      if(dotPath.indexOf('\/') !== -1){
+        // UNIX PATH
+        pathArray = dotPath.split('\/');
+      } else if(dotPath.indexOf('\\')){
+        // WINDOWS PATH
+        pathArray = dotPath.split('\\');
+      } else {
+        // File only
+        return dotPath;
+      }
+
       var file = pathArray.pop();
 
-      if(options.ignore){
-        var removePathArray = options.ignore;
+      if(options.ignorePath){
+        var removePathArray = options.ignorePath;
         var newPathArray = pathArray;
             removePathArray = removePathArray.split('/');
 
