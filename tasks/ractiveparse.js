@@ -118,9 +118,19 @@
       var file = pathArray.pop();
 
       if(options.ignorePath){
-        var removePathArray = options.ignorePath;
+        var removePathString = options.ignorePath;
         var newPathArray = pathArray;
-            removePathArray = removePathArray.split('/');
+        var removePathArray = [];
+
+        if(removePathString.indexOf('\/') !== -1){
+          // UNIX PATH
+          removePathArray = removePathString.split('\/');
+        } else if(removePathString.indexOf('\\')){
+          // WINDOWS PATH
+          removePathArray = removePathString.split('\\');
+        } else {
+          removePathArray = removePathString;
+        }
 
         for(var i = pathArray.length; i>-1; i--){
           var path = newPathArray[i];
