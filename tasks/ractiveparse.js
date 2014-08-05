@@ -27,7 +27,8 @@
     function make(){
         // set the default options
          /*jshint validthis:true */
-        var files;
+        var files,
+            templateOptions = '\n';
 
         options = this.options({
           type: 'javascript' // type: 'javascript' (default) || 'extjs'
@@ -41,6 +42,14 @@
           grunt.fail.warn('Can not find src files. Please check your Gruntfile configuration \n');
         } else {
           files = this.files;
+        }
+
+        // Allow people to set custom class properties
+        if(options.clsConfig){
+          var object = options.clsConfig;
+          for (var key in object){
+            templateOptions = templateOptions + '\t\t' + key + ' : ' + object[key] + ',\n';
+          }
         }
 
         // Loop through the src files then join them in a single Destination file.
@@ -60,7 +69,7 @@
 
             // Join parsed files and write them to a new file.
             grunt.file.write(file.dest,
-                options.destSyntax + " {\n" + templates.join(",\n") + "\n\n});");
+                options.destSyntax + " {" + templateOptions + templates.join(",\n") + "\n\n});");
 
             // Log success.
             grunt.log.writeln('File "' + chalk.cyan(file.dest) + '" created.');

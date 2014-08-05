@@ -59,6 +59,12 @@ Default value: ''
 
 A string value path that is used to identify folder names to skip when creating the ExtJS class name.
 
+#### options.clsConfig
+Type: `Object`
+Default value: '' 
+
+An object to allow you to set custom properties on your final compiled templates file.
+
 ### Usage Examples
 
 #### Default Options
@@ -87,7 +93,10 @@ grunt.initConfig({
     options: {
       appName: 'MyApp',
       type: 'extjs',
-      ignorePath: 'app/'
+      ignorePath: 'app/',
+      configCls: {
+        singleton: true
+      }
     },
     src: 'templates/*',
     dest: 'app/templates/templates.js'
@@ -114,6 +123,9 @@ MyApp/
 MyApp/app/templates/templates.js
 ```js
 Ext.define('MyApp.templates.Templates', {
+  
+  singleton: true,
+
   templates: {
     temp1 : [{"t":7,"e":"div","a":{"class":"box"},"f":[{"t":2,"x":{"r":["box","content"],"s":"${0}-${1}"}}]}],
     temp2 : [{"t":7,"e":"button","a":{"class":"btn"},"f":[{"t":2,"x":{"r":["button","label"],"s":"${0}-${1}"}}]}],

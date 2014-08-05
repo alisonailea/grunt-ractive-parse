@@ -47,7 +47,10 @@
           options: {
             appName: 'MyApp',
             type: 'extjs',
-            ignorePath: 'test/tmp/app'
+            ignorePath: 'test/tmp/app',
+            clsConfig: {
+              'singleton' : true
+            }
           },
           src: 'test/templ/*',
           dest: 'test/tmp/app/extTemplates.js'

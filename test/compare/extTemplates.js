@@ -1,4 +1,5 @@
 Ext.define('MyApp.ExtTemplates', {
+		singleton : true,
 
 		templates: {		
 			blah: {				
