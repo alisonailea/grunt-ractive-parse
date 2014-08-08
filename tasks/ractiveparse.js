@@ -83,10 +83,10 @@
     
     function setTerminal() {
       switch (options.type) {
-        case: 'javascript':
+        case 'javascript':
           return ';';
           
-        case: 'extjs':
+        case 'extjs':
           return ');';
           
         default:
