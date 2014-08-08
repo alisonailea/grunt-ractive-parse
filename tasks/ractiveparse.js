@@ -59,6 +59,9 @@
 
             // Define destination type
             options.destSyntax = setType(file.dest);
+            
+            // Define terminal type
+            options.terminalSyntax = setTerminal();
 
             // Parse the template src files
             file.src.map(parse);
@@ -69,13 +72,28 @@
 
             // Join parsed files and write them to a new file.
             grunt.file.write(file.dest,
-                options.destSyntax + " {" + templateOptions + templates.join(",\n") + "\n\n});");
+                options.destSyntax + " {" + templateOptions + templates.join(",\n") + "\n\n}" + options.terminalSyntax);
 
             // Log success.
             grunt.log.writeln('File "' + chalk.cyan(file.dest) + '" created.');
         });
 
         templateJson = {};
+    }
+    
+    function setTerminal() {
+      switch (options.type) {
+        case: 'javascript':
+          return ';';
+          
+        case: 'extjs':
+          return ');';
+          
+        default:
+          // warning
+          grunt.fail.warn('Unrecognized type. Please choose "javascript" or "extjs"\n');
+          return false;
+      }
     }
 
     function setType(filePath){
