@@ -68,8 +68,16 @@
             templateFile = file.templateFile;
 
             // Join parsed files and write them to a new file.
-            grunt.file.write(file.dest,
-                options.destSyntax + " {" + templateOptions + templates.join(",\n") + "\n\n});");
+            var content = options.destSyntax +
+            " {" + templateOptions + templates.join(",\n") + "\n\n}";
+
+            console.log(options.type);
+            if (options.type === 'extjs') {
+                content += ')';
+            }
+            content += ';';
+
+            grunt.file.write(file.dest, content);
 
             // Log success.
             grunt.log.writeln('File "' + chalk.cyan(file.dest) + '" created.');
