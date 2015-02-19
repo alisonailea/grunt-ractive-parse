@@ -19,4 +19,4 @@ var templates = {
 			}
 		}
 
-});
+};
