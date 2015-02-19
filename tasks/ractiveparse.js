@@ -71,7 +71,6 @@
             var content = options.destSyntax +
             " {" + templateOptions + templates.join(",\n") + "\n\n}";
 
-            console.log(options.type);
             if (options.type === 'extjs') {
                 content += ')';
             }
